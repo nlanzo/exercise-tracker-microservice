@@ -72,7 +72,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   const description = req.body.description;
   const duration = req.body.duration;
   let date = req.body.date;
-  if (date === '') {
+  if (date === '' || date === undefined || date === null || date === 'Invalid Date') {
     date = new Date();
   } else {
     date = new Date(date);
@@ -87,11 +87,11 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
     newExercise.save();
     const user = await User.findById(userId);
     res.json({
-      _id: user._id,
       username: user.username,
-      date: date.toDateString(),
+      description: description,
       duration: parseInt(duration),
-      description: description
+      date: date.toDateString(),
+      _id: user._id,
     });
   } catch (err) {
     res.json({ error: err });
