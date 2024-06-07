@@ -75,7 +75,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   if (date === '' || date === undefined || date === null || date === 'Invalid Date') {
     date = new Date();
   } else {
-    date = new Date(date);
+    date = new Date(date + 'T00:00:00-06:00');
   }
   const newExercise = new Exercise({
     userId: userId,
